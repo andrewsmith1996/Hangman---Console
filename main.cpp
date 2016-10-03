@@ -16,7 +16,7 @@
 using namespace std;
 
 
-hello
+
 
 string getWord(){
     cout << "Player One Enter Word\n";
