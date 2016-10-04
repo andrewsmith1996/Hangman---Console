@@ -32,14 +32,46 @@ string getWord(){
     return userWord;
 }
 
-char getGuess(){
+bool checkIfInGuesses(vector<char>&guesses, char guess){
+    bool inGuesses = false;
     
-    //Get the guess from the user
-    cout << "Take a Guess!\n";
+    for(int count = 0; count < guesses.size(); count++){
+        if(guesses[count] == guess){
+            inGuesses = true;
+        }
+    }
     
+    return inGuesses;
+    
+}
+
+char getGuess(vector<char>&guesses){
+    
+    bool enterSwitch = false;
+    bool inGuesses = false;
     char guess;
+
+    while(enterSwitch == false){
     
-    cin >> guess;
+        //Get the guess from the user
+        cout << "Take a Guess!\n";
+    
+    
+        cin >> guess;
+        
+        inGuesses = checkIfInGuesses(guesses, guess);
+        
+        if(inGuesses == false){
+            guesses.push_back(guess);
+            enterSwitch = true;
+        } else{
+            cout << "Already guessed!\n";
+        }
+        
+        
+
+        
+    }
     
     //Return the uppercase version of the guess
     return toupper(guess);
@@ -100,6 +132,8 @@ int main() {
     bool gameWon = false;
     int lives = 5;
     
+    vector<char> guesses = {};
+    
     //Get the word
     string userWordOriginal = getWord();
     
@@ -117,7 +151,10 @@ int main() {
     
     while(gameWon == false){
         //Get the user's guess
-        char guess = getGuess();
+        char guess = getGuess(guesses);
+        
+        
+        
     
         //Find number of occurences
         int occurences = count(userWordOriginal.begin(), userWordOriginal.end(), guess);
@@ -156,6 +193,7 @@ int main() {
     
         //Print the word to the screen
         cout << hiddenWord << endl;
+        cout << "Lives:" << lives << endl;
     
     }
     
